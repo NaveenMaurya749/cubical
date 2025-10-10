@@ -1,0 +1,10 @@
+name = "cubical"
+version = "0.1.0"
+defaultTargets = ["cubical"]
+
+[[lean_lib]]
+name = "Cubical"
+
+[[lean_exe]]
+name = "cubical"
+root = "Main"
