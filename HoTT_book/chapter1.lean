@@ -80,7 +80,7 @@ end MyProd
 
 namespace MySigma
 
--- Again, projections are primitive
+-- Again, projections are primitive, while rec is defined from them
 
 def pr1 {α : Type} {β : α → Type} : (Σ x : α, β x) → α :=
   fun ⟨ x, _ ⟩ ↦ x
@@ -93,6 +93,35 @@ def rec {α : Type} {β : α → Type} (γ : Type) :
   fun g z ↦ g (pr1 z) (pr2 z)
 
 def def_equaliy_valid {α : Type} {β : α → Type} (γ : Type)
-  (g : (x : α)) → (y : β )
+  (g : (x : α) → (y : β x) → γ) (a : α) (b : β a) :
+  rec γ g ⟨ a, b ⟩ = g a b :=
+  by
+  unfold rec
+  rfl
 
 end MySigma
+
+-- Problem 3
+-- Derive the induction principle for products ind (α × β) using only the projections,
+-- and the propositional uniqueness principle uniq (α × β) and verify that
+-- the definitional equalities are valid. Generalize uniq to Σ-types,
+-- and do the same for Σ-types.
+
+namespace MyProd
+
+#print uniq
+
+theorem ind_def_eq (γ : α × β → Type)
+  (g : (x : α) → (y : β) → γ (x, y)) (a : α) (b : β) :
+  ind γ g (a, b) = g a b :=
+  by
+  -- use uniqueness: ((pr1 (a,b)), (pr2 (a,b))) = (a,b)
+  let p := uniq (a, b)
+  -- from the equality of pairs we get equalities of components
+  have ⟨h1, h2⟩ := Prod.mk.inj p
+  -- ind on a pair computes to g (pr1 _) (pr2 _), then rewrite components
+  calc
+    ind γ g (a, b) = g (pr1 (a, b)) (pr2 (a, b)) := rfl
+    _ = g a b := by rw [h1, h2]
+
+end MyProd
