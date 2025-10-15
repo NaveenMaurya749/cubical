@@ -111,17 +111,13 @@ namespace MyProd
 
 #print uniq
 
-theorem ind_def_eq (γ : α × β → Type)
-  (g : (x : α) → (y : β) → γ (x, y)) (a : α) (b : β) :
-  ind γ g (a, b) = g a b :=
-  by
-  -- use uniqueness: ((pr1 (a,b)), (pr2 (a,b))) = (a,b)
-  let p := uniq (a, b)
-  -- from the equality of pairs we get equalities of components
-  have ⟨h1, h2⟩ := Prod.mk.inj p
-  -- ind on a pair computes to g (pr1 _) (pr2 _), then rewrite components
-  calc
-    ind γ g (a, b) = g (pr1 (a, b)) (pr2 (a, b)) := rfl
-    _ = g a b := by rw [h1, h2]
+theorem ind_def_eq : (γ : α × β → Type)
+  → (g : (x : α) → (y : β) → γ (x, y))
+  → (a : α) → (b : β)
+  → (ind γ g (a, b) = g a b)
+  := by
+  intro γ g a b
+  unfold ind
+  rfl
 
 end MyProd
