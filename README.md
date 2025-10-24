@@ -7,8 +7,10 @@ Bachelor's Thesis Project repository on Cubical Homotopy Type Theory
 ```
 cubical/                -- repository
 ├── Cubical/            -- nothing yet
-├── HoTT_book/          -- Interactive exercises from the HoTT book
+├── HoTT/               -- Interactive exercises from the HoTT book
 │ └── chapter1.lean     -- Exercises from Chapter 1
-├── AutomataLean.lean   -- root file to be built, imports all modules from AutomataLean/
+├── Cubical.lean        -- imports all modules from Cubical/
+├── HoTT.lean           -- imports all modules from HoTT/
+├── Main.lean           -- root file to be built
 └── README.md           -- readme
 ```
