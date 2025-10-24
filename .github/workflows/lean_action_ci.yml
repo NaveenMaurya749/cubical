@@ -15,11 +15,9 @@ jobs:
       - name: Build project with Lake
         run: |
           lake --version
-          lake env get
           lake build
       - name: Compile specific files (sanity check)
         run: |
-          # print lean version if available
           lean --version || true
           # attempt to compile the two top-level files (harmless if already part of the Lake build)
           lean --make Cubical.lean HoTT.lean || true
