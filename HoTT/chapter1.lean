@@ -36,7 +36,7 @@ def uniq : (z : α × β) → ((pr1 z), (pr2 z)) = z
 
 end MyProd
 
--- Problem 1
+-- Problem 1.1
 -- Given functions f : α → β and g : α → γ, define their composite g ∘ f : α → γ. Show that h ∘ (g ∘ f) = (h ∘ g) ∘ f.
 
 def compose (f : α → β) (g : β → γ) : α → γ :=
@@ -48,7 +48,7 @@ theorem compose_assoc (f : α → β) (g : β → γ) (h : γ → δ) :
   unfold compose
   rfl
 
--- Problem 2
+-- Problem 1.2
 -- Derive the recursion principle for products rec α β
 
 namespace MyProd
@@ -101,7 +101,7 @@ def def_equaliy_valid {α : Type} {β : α → Type} (γ : Type)
 
 end MySigma
 
--- Problem 3
+-- Problem 1.3
 -- Derive the induction principle for products ind (α × β) using only the projections,
 -- and the propositional uniqueness principle uniq (α × β) and verify that
 -- the definitional equalities are valid. Generalize uniq to Σ-types,
@@ -111,13 +111,6 @@ namespace MyProd
 
 #print uniq
 
-theorem ind_def_eq : (γ : α × β → Type)
-  → (g : (x : α) → (y : β) → γ (x, y))
-  → (a : α) → (b : β)
-  → (ind γ g (a, b) = g a b)
-  := by
-  intro γ g a b
-  unfold ind
-  rfl
+
 
 end MyProd

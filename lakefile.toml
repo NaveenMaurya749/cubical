@@ -4,6 +4,9 @@ defaultTargets = ["cubical"]
 
 [[lean_lib]]
 name = "Cubical"
+    
+[[lean_lib]]
+name = "HoTT"
 
 [[lean_exe]]
 name = "cubical"
