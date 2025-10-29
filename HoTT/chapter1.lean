@@ -345,6 +345,8 @@ namespace MyBoolProd
 def MyBoolProd (α β : Type) : Type :=
   (x : Bool) → Bool.rec α β x
 
+#check MyBoolProd
+
 def pr1 (p : MyBoolProd α β) : α :=
   p false
 
@@ -366,13 +368,17 @@ fun b ↦ match b with
 
 #print funext
 /-
-theorem funext.{u, v} : ∀ {α : Sort u} {β : α → Sort v} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g :=
+theorem funext.{u, v} : ∀ {α : Sort u} {β : α → Sort v} {f g : (x : α) → β x},
+(∀ (x : α), f x = g x) → f = g :=
 fun {α} {β} {f g} h =>
   let eqv := fun f g => ∀ (x : α), f x = g x;
   let extfunApp := fun f x => f.liftOn (fun f => f x) fun x_1 x_2 h => h x;
   id (congrArg extfunApp (Quot.sound h))
 -/
 
+-- This is the part of the proof that requires function extentionality,
+-- since otherwise there is no introduction rule for the equality of functions
+-- that are not definitionaly equal.
 theorem pairwise (g : MyBoolProd α β) : pair (g false) (g true) = g
   := by
   apply funext
@@ -407,3 +413,156 @@ end MyBoolProd
 -- Give an alternative derivation of ind'_{=_A} from ind_{=_A} which avoids the use of universes.
 
 -/
+
+namespace MyEq
+
+inductive MyEq : α → α → Type where
+| refl (a : α) : MyEq a a
+
+notation:100 a " =' " b => MyEq a b
+
+def ind  (f : ((x : α) → (y : α) → (p : x =' y) → Type))
+  : ((a : α) → f a a (MyEq.refl a))
+  → (x : α) → (y : α) → (p : x =' y) → f x y p :=
+  fun c x _ p ↦
+  match p with
+  | MyEq.refl x => c x
+
+theorem ind_def_eq (f : (x : α) → (y : α) → (p : x =' y) → Type)
+  (c : (a : α) → f a a (MyEq.refl a))
+  (z : α) : ind f c z z (MyEq.refl z) = c z := rfl
+
+def application (f : α → β) : (p : x =' y) → f x =' f y :=
+  ind (fun x y _ ↦ f x =' f y) (fun a ↦ MyEq.refl (f a)) x y
+
+theorem application_def_eq (f : α → β) :
+  application f (MyEq.refl x) = MyEq.refl (f x) := rfl
+
+def transport (π : α → Type) {x y : α} (p : x =' y) : π x → π y :=
+  ind (fun x y _ ↦ π x → π y) (fun _ ↦ id) x y p
+
+-- theorem lift_def_eq : lift π u p
+
+def isContr (α : Type) := Σ a : α, ((x : α) → a ='x)
+
+def freePathSpace (α : Type) := Σ (x y : α), x =' y
+
+def basedPathSpace {α : Type} (a : α) := Σ (x : α), a =' x
+
+def based_path_contr {α : Type} (a : α) : isContr (basedPathSpace a) := by
+  unfold isContr
+  let fst := Sigma.mk a (MyEq.refl a)
+  constructor
+  · intro z
+    let ⟨u, v⟩ := z
+    -- let π : (a : α) → basedPathSpace a := fun a ↦ ⟨a, MyEq.refl a⟩
+    -- let π : α → Type := basedPathSpace
+    -- let tr : π u := transport π v ⟨a, MyEq.refl a⟩
+    -- apply transport
+    -- ·
+    -- have cheat : fst =' ⟨u, v⟩ := sorry
+    -- let β := MyEq.transport π v fst
+    -- let ⟨u', v'⟩ := β
+    -- have h : a =' u' := transitive v v'
+    -- exact cheat
+    sorry
+  · exact fst
+-- Incomplete
+end MyEq
+
+/-
+## Problem 1.8
+-- Define multiplication and exponentiation using rec_ℕ. Verify that (ℕ, +, 0, ×, 1)
+-- is a semiring using only $ind_ℕ$. You will probably also need to use symmetry and
+-- transitivity fo equality.
+
+-/
+
+section MyNat
+
+#print Nat
+/-
+inductive Nat : Type
+number of parameters: 0
+constructors:
+Nat.zero : Nat
+Nat.succ : Nat → Nat
+-/
+
+#print Nat.rec
+/-
+recursor Nat.rec.{u} : {motive : Nat → Sort u} →
+  motive Nat.zero → ((n : Nat) → motive n → motive n.succ) → (t : Nat) → motive t
+-/
+
+/-
+### Note:
+This `Nat.rec` is more powerful than our indepedendent type eliminator `rec_ℕ`. In fact, this is as powerful as our depdendent eliminator, `ind_ℕ`.
+Though, we will only be using the independent type family in our use case.
+-/
+
+def add : Nat → Nat → Nat :=
+  Nat.rec (fun n ↦ n) (fun _ f ↦ (fun n ↦ Nat.succ (f n)))
+
+#eval add 2 3   --5
+#eval add 53 47 --100
+
+def mul : Nat → Nat → Nat :=
+  Nat.rec (fun _ ↦ 0) (fun _ f ↦ (fun n ↦ (f n) + n))
+  -- Not using `add` but rather the internal, much more optimized `+`
+
+#eval mul 2 4   --8
+#eval mul 37 3  --111
+#eval mul 24 25 --600
+
+-- exp a b := b^a
+def exp : Nat → Nat → Nat :=
+  Nat.rec (fun _ ↦ 1) (fun _ f ↦ (fun n ↦ mul (f n) n))
+
+-- exp' a b := a^b
+def exp' : Nat → Nat → Nat :=
+  fun a b ↦ (exp) b a
+
+#eval exp  4 6 --6^4 = 1296
+#eval exp' 4 6 --4^6 = 4096
+
+-- -- Verfying $Nat$ is a semiring
+-- theorem add_assoc : (a b c : Nat) → (a + b) + c = a + (b + c) := by
+--   intro a b c
+--   induction a with
+--   | zero =>
+
+-- theorem nat_semiring :
+
+end MyNat
+
+/-
+## Problem 1.9
+-- Define the type family `Fin : ℕ → Type`, and the dependent function
+-- `fmax : (n : ℕ) → Fin (n+1)`.
+-/
+
+namespace MyFin
+
+-- We will use Sum types to construct Fin.
+-- Note that `Fin (n+1) := Fin(n) + 1`, where `1` is the Unit type.
+notation:50 α "+" β => Sum α β
+
+def Fin : Nat → Type := Nat.rec Empty (fun _ α ↦ α + Unit)
+
+-- Some example Fin elements
+def zero_one : Fin 1 := Sum.inr Unit.unit
+def zero_two : Fin 2 := Sum.inl (Sum.inr Unit.unit)
+def one_two  : Fin 2 := Sum.inr Unit.unit
+
+#check Fin 19
+#print Fin
+
+def fmax : (n : Nat) → Fin (n + 1) :=
+  Nat.rec (Sum.inr Unit.unit) (fun _ _ ↦ Sum.inr Unit.unit)
+
+#check fmax 0
+#check fmax 5
+
+end MyFin
+-- This completes our construction.`
