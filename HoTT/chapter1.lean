@@ -411,7 +411,7 @@ end MyBoolProd
 /-
 ## Problem 1.7
 -- Give an alternative derivation of ind'_{=_A} from ind_{=_A} which avoids the use of universes.
-
+### (INCOMPLETE)
 -/
 
 namespace MyEq
@@ -526,7 +526,8 @@ def exp' : Nat → Nat → Nat :=
 #eval exp  4 6 --6^4 = 1296
 #eval exp' 4 6 --4^6 = 4096
 
--- -- Verfying $Nat$ is a semiring
+-- Verfying $Nat$ is a semiring-
+-- (Incomplete)
 -- theorem add_assoc : (a b c : Nat) → (a + b) + c = a + (b + c) := by
 --   intro a b c
 --   induction a with
@@ -566,3 +567,111 @@ def fmax : (n : Nat) → Fin (n + 1) :=
 
 end MyFin
 -- This completes our construction.`
+
+/-
+## Problem 1.10
+-- Show that the Ackermann function `ack : ℕ → ℕ → ℕ` is definable using only `rec_ℕ`
+-- satisying the following equations:
+1. ack (0, n)             := succ(n)
+2. ack (succ(m),0)        := ack(m, 1)
+3. ack (succ(m), succ(n)) := ack(m, ack(succ(m), n))
+-/
+
+def ackermann : Nat → Nat → Nat
+  := Nat.rec Nat.succ (fun _ ack_m ↦ (Nat.rec (ack_m 1) (fun n k ↦ ack_m k)))
+
+#eval ackermann 1 2 --4
+#eval ackermann 2 4 --11
+#eval ackermann 3 5 --253
+
+-- theorem ackermann_def_eq (m n : Nat)
+--   : ackermann 0 m = n.succ
+--   ∧ ackermann m.succ 0 = ackermann m 1
+--   ∧ ackermann m.succ n.succ = ackermann m (ackermann m.succ n)
+--   := by
+--   constructor
+--   · unfold ackermann
+--     unfold Nat.rec
+
+/-
+## Problem 1.11
+Show that for any type α, ¬¬¬ α → ¬ α.
+-/
+
+notation:50 "⊥" => Empty
+
+def triple_neg_implies_neg {α : Type}
+: (((α → ⊥) → ⊥) → ⊥) → (α → ⊥) :=
+  fun g a ↦ g ((fun a imp ↦ imp a) a)
+
+/-
+## Problem 1.12
+Using propositions as types interpretation, derive the following tautologies.
+  i. `If α, then (if β then α)`
+ ii. `If α, then not (not α)`
+iii. `If (not α or not β), then not (α and β)`
+-/
+
+def theorem1 : α → (β → α) := fun a _ ↦ a
+
+def theorem2 : α → ((α → ⊥) → ⊥) := fun a g ↦ g a
+
+#print Sum.rec
+
+def pr1 : α × β → α := fun z ↦ z.1
+def pr2 : α × β → β := fun z ↦ z.2
+
+/- Code generator doesn't support Sum.rec yet, so I'll do this by structural recursion
+def theorem3 : ((α → ⊥) + (β → ⊥)) → (α × β → ⊥)
+  := Sum.rec (fun f ↦ (fun z ↦ f (pr1 z))) (fun f ↦ (fun z ↦ f (pr2 z)))
+-/
+
+def theorem3 : ((α → ⊥) + (β → ⊥)) → (α × β → ⊥)
+  := by
+  intro f
+  match f with
+  | Sum.inl g => exact (fun z ↦ g (pr1 z))
+  | Sum.inr g => exact (fun z ↦ g (pr2 z))
+
+/-
+## Problem 1.13
+-- Using propositions-as-types, derive the double negation of the principle of excluded middle,
+-- i.e., prove _not(not(P or not P))_
+-/
+
+-- We first prove a lemma
+def de_morgan_not_or_implies_and_not (α β : Type)
+  : ((α + β) → ⊥) → (α → ⊥) × (β → ⊥)
+  := fun g ↦ ⟨fun a ↦ g (Sum.inl a), fun b ↦ g (Sum.inr b)⟩
+
+def lem_double_neg : ((α + α → ⊥) → ⊥) → ⊥
+  := by
+  let f := de_morgan_not_or_implies_and_not α (α → ⊥)
+  exact fun z ↦ (pr2 (f z)) (pr1 (f z))
+
+/-
+## Problem 1.15
+-- Show that indiscernibility of identicals follows from path induction.
+-/
+
+section MyEq
+open MyEq
+
+def id' (α : Type) : (a : α) → α := fun z ↦ z
+
+def indiscern_identicals {α : Type} {π : α → Type} : ((x y : α) → (p : x =' y) → π x → π y)
+  := fun _ _ p Z ↦ MyEq.transport π p Z
+
+theorem indiscern_identicals_def_eq {α : Type} {π : α → Type} {x : α}
+  : indiscern_identicals x x (MyEq.refl x) = id' (π x)
+  := rfl
+
+end MyEq
+
+/-
+## Problem 1.16
+-- Show that the addition of natural number is commutative.
+-/
+
+theorem add_comm : (i j : Nat) → (Nat.add i j = Nat.add j i)
+:=
