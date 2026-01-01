@@ -41,7 +41,7 @@ end MyProd
 -/
 
 /-
-## Problem 1.1
+## Exercise 1.1
 -- Given functions f : α → β and g : α → γ, define their composite g ∘ f : α → γ. Show that h ∘ (g ∘ f) = (h ∘ g) ∘ f.
 -/
 
@@ -55,7 +55,7 @@ theorem compose_assoc (f : α → β) (g : β → γ) (h : γ → δ) :
   rfl
 
 /-
-## Problem 1.2
+## Exercise 1.2
 -- Derive the recursion principle for products rec α β
 -/
 
@@ -110,7 +110,7 @@ theorem def_equaliy_valid {α : Type} {β : α → Type} (γ : Type)
 end MySigma
 
 /-
-## Problem 1.3
+## Exercise 1.3
 -- Derive the induction principle for products ind (α × β) using only the projections,
 -- and the propositional uniqueness principle uniq (α × β) and verify that
 -- the definitional equalities are valid. Generalize uniq to Σ-types,
@@ -194,7 +194,7 @@ theorem ind_def_eq {α : Type} {β : α → Type}
 end MySigma
 
 /-
-## Problem 1.4
+## Exercise 1.4
 -- Assuming as given only the iterator for natural numbers,
   iter : ∀ (γ : Type), γ → (γ → γ) → ℕ → γ,
 -- with the defining equations
@@ -273,7 +273,7 @@ theorem rec_def_eq (γ : Type) (c0 : γ) (cs : (n : Nat) → γ → γ) :
 end MyNat
 
 /-
-## Problem 1.5
+## Exercise 1.5
 -- Show that if we define A + B := Σ x:2, rec_2 (Type) A B x,
 -- then we can give a definition of ind_{A+B} for which the definitional equalities hold.
 -/
@@ -334,7 +334,7 @@ theorem ind_def_eq {α β : Type} {γ : MySum α β → Type}
 end MySum
 
 /-
-## Problem 1.6
+## Exercise 1.6
 -- Show that if we define A × B := Π (x : 2), rec_2 (Type) A B x,
 -- then we can give a definition of ind_{A×B} for which the definitional equalities hold
 -- propositionally.
@@ -409,7 +409,7 @@ theorem ind_def_eq {α β : Type} {γ : MyBoolProd α β → Type}
 end MyBoolProd
 
 /-
-## Problem 1.7
+## Exercise 1.7
 -- Give an alternative derivation of ind'_{=_A} from ind_{=_A} which avoids the use of universes.
 ### (INCOMPLETE)
 -/
@@ -419,7 +419,7 @@ namespace MyEq
 inductive MyEq : α → α → Type where
 | refl (a : α) : MyEq a a
 
-notation:100 a " =' " b => MyEq a b
+notation:20 a " =' " b => MyEq a b
 
 def ind  (f : ((x : α) → (y : α) → (p : x =' y) → Type))
   : ((a : α) → f a a (MyEq.refl a))
@@ -471,7 +471,7 @@ def based_path_contr {α : Type} (a : α) : isContr (basedPathSpace a) := by
 end MyEq
 
 /-
-## Problem 1.8
+## Exercise 1.8
 -- Define multiplication and exponentiation using rec_ℕ. Verify that (ℕ, +, 0, ×, 1)
 -- is a semiring using only $ind_ℕ$. You will probably also need to use symmetry and
 -- transitivity fo equality.
@@ -538,7 +538,7 @@ def exp' : Nat → Nat → Nat :=
 end MyNat
 
 /-
-## Problem 1.9
+## Exercise 1.9
 -- Define the type family `Fin : ℕ → Type`, and the dependent function
 -- `fmax : (n : ℕ) → Fin (n+1)`.
 -/
@@ -569,7 +569,7 @@ end MyFin
 -- This completes our construction.`
 
 /-
-## Problem 1.10
+## Exercise 1.10
 -- Show that the Ackermann function `ack : ℕ → ℕ → ℕ` is definable using only `rec_ℕ`
 -- satisying the following equations:
 1. ack (0, n)             := succ(n)
@@ -594,7 +594,7 @@ def ackermann : Nat → Nat → Nat
 --     unfold Nat.rec
 
 /-
-## Problem 1.11
+## Exercise 1.11
 Show that for any type α, ¬¬¬ α → ¬ α.
 -/
 
@@ -605,7 +605,7 @@ def triple_neg_implies_neg {α : Type}
   fun g a ↦ g ((fun a imp ↦ imp a) a)
 
 /-
-## Problem 1.12
+## Exercise 1.12
 Using propositions as types interpretation, derive the following tautologies.
   i. `If α, then (if β then α)`
  ii. `If α, then not (not α)`
@@ -634,7 +634,7 @@ def theorem3 : ((α → ⊥) + (β → ⊥)) → (α × β → ⊥)
   | Sum.inr g => exact (fun z ↦ g (pr2 z))
 
 /-
-## Problem 1.13
+## Exercise 1.13
 -- Using propositions-as-types, derive the double negation of the principle of excluded middle,
 -- i.e., prove _not(not(P or not P))_
 -/
@@ -650,7 +650,7 @@ def lem_double_neg : ((α + α → ⊥) → ⊥) → ⊥
   exact fun z ↦ (pr2 (f z)) (pr1 (f z))
 
 /-
-## Problem 1.15
+## Exercise 1.15
 -- Show that indiscernibility of identicals follows from path induction.
 -/
 
@@ -667,11 +667,3 @@ theorem indiscern_identicals_def_eq {α : Type} {π : α → Type} {x : α}
   := rfl
 
 end MyEq
-
-/-
-## Problem 1.16
--- Show that the addition of natural number is commutative.
--/
-
-theorem add_comm : (i j : Nat) → (Nat.add i j = Nat.add j i)
-:=
