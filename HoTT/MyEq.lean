@@ -3,7 +3,7 @@ namespace MyEq
 inductive MyEq : α → α → Type where
 | refl (a : α) : MyEq a a
 
-notation:20 a " =' " b => MyEq a b
+notation:0 a " =' " b => MyEq a b
 
 def ind  (f : ((x : α) → (y : α) → (p : x =' y) → Type))
   : ((a : α) → f a a (MyEq.refl a))
@@ -12,7 +12,7 @@ def ind  (f : ((x : α) → (y : α) → (p : x =' y) → Type))
   match p with
   | MyEq.refl x => c x
 
-theorem ind_def_eq (f : (x : α) → (y : α) → (p : x =' y) → Type)
+theorem ind_def_eq {f : (x : α) → (y : α) → (p : x =' y) → Type}
   (c : (a : α) → f a a (MyEq.refl a))
   (z : α) : ind f c z z (MyEq.refl z) = c z := rfl
 
@@ -26,6 +26,8 @@ def transport (π : α → Type) {x y : α} (p : x =' y) : π x → π y :=
   ind (fun x y _ ↦ π x → π y) (fun _ ↦ id) x y p
 
 -- theorem lift_def_eq : lift π u p
+
+notation:50 p " ⁎ " u => transport _ p u
 
 def isContr (α : Type) := Σ a : α, ((x : α) → a ='x)
 
