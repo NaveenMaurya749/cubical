@@ -8,7 +8,10 @@ Bachelor's Thesis Project repository on Cubical Homotopy Type Theory
 cubical/                -- repository
 ├── Cubical/            -- nothing yet
 ├── HoTT/               -- Interactive exercises from the HoTT book
-│ └── chapter1.lean     -- Exercises from Chapter 1
+│ ├── MyEq.lean         -- Custom inductive type of equality
+│ ├── Tactics.lean      -- Custom defined tactics such as `pathind`
+│ ├── chapter1.lean     -- Exercises from Chapter 1
+│ └── chapter2.lean     -- Exercises from Chapter 1
 ├── Cubical.lean        -- imports all modules from Cubical/
 ├── HoTT.lean           -- imports all modules from HoTT/
 ├── Main.lean           -- root file to be built

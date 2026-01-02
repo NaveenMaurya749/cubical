@@ -59,13 +59,13 @@ def concat_path_3 {α : Type} {x y z: α} (p : x =' y) (q : y =' z) : x =' z :=
 
 -- Now we prove that `concat_path_1` and `concat_path_2` are all equal to `concat_path_3`
 
-def concat_path_eq_1 {α : Type} {x y z: α} (p : x =' y) (q : y =' z) :
-  concat_path_1 p q =' concat_path_3 p q :=
-  by
-  unfold concat_path_1 concat_path_3
-  unfold ind
+-- def concat_path_eq_1 {α : Type} {x y z: α} (p : x =' y) (q : y =' z) :
+--   concat_path_1 p q =' concat_path_3 p q :=
+--   by
+--   unfold concat_path_1 concat_path_3
+--   unfold ind
 
-def concat_path_eq_2 {α : Type} {x y z: α} (p : x =' y) (q : y =' z) :
-  concat_path_2 p q =' concat_path_3 p q :=
-  by
-  pathind (concat_path_2 p q) =' (concat_path_3 p q)
+-- def concat_path_eq_2 {α : Type} {x y z: α} (p : x =' y) (q : y =' z) :
+--   concat_path_2 p q =' concat_path_3 p q :=
+--   by
+--   pathind (concat_path_2 p q) =' (concat_path_3 p q)
