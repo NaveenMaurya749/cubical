@@ -12,32 +12,6 @@ import HoTT.Equiv
 open MyEq
 
 /-
- Here we show reflexivity, symmetry and transitivity of paths.
--/
-
-def constant_path {α : Type} (a : α) : a =' a :=
-  MyEq.refl a
-
-def inverse_path {α : Type} {x y : α} (p : x =' y) : y =' x :=
-  ind (fun x y _ ↦ y =' x) (fun a ↦ MyEq.refl a) x y p
-
-def concat_path {α : Type} {x y z : α} (p : x =' y) (q : y =' z) : x =' z :=
-  ind (fun x y _ ↦ (z : α) → (y =' z) → (x =' z))
-    (fun x ↦ (fun z q ↦ ind (fun x z _ ↦ x =' z) (fun a ↦ MyEq.refl a) x z q))
-    x y p z q
-
-def reflexivity {α : Type} (a : α) : a =' a :=
-  constant_path a
-
-def symmetry {α : Type} {x y : α} (p : x =' y) : y =' x :=
-  inverse_path p
-
-def transitivity {α : Type} {x y z : α} (p : x =' y) (q : y =' z) : x =' z :=
-  concat_path p q
-
-notation:10 p " ◾ " q => concat_path p q
-
-/-
 ## Exercise 2.1
 Show that the three obvious proofs of Lemma 2.1.2 are equal.
 -/
@@ -101,32 +75,26 @@ are equivalences.
 section
 open Equiv
 
--- def transport_equiv {α β : Type} (f : α → β) (x y : α) (p : x =' y) :
---   Equiv.isEquiv lift p (fx) :=
---   sorry
-
+def transport {β : α → Type} {x y : α} (p : x =' y) : β x → β y
+  := ind (fun x y _ ↦ β x → β y) (fun a ↦ id (β a)) x y p
+ 
 /-
 # Exercise 2.6
 Prove that if `p : x =' y`, then the function `(p · -) : (y =' z) → (x =' z)` is an equivalence.
 -/
 
 def concat_along {x y : α} (p : x =' y) (z : α) : (y =' z) → (x =' z) :=
-  fun q ↦ p ◾ q
+  fun q ↦ concat_path p q
 
--- def pathsEquiv (x y z : α) (p : x =' y) : isEquiv (concat_along p z) :=
---   by
---   let f   := concat_along p
---   have g  := concat_along (inverse_path p)
---   unfold isEquiv
---   constructor
---   · constructor
---     · unfold homotopic concat_along
---       simp
---       intro q
---       unfold Equiv.id
---   · constructor
---     ·
---       sorry
---     · exact g z
-
+--def pathsEquiv (x y z : α) (p : x =' y) : isEquiv (concat_along p z) := by
+--  let f   := concat_along p
+--  have g  := concat_along (inverse_path p) z
+--  unfold isEquiv
+--  refine ⟨concat_along (inverse_path p) z, ?_⟩
+--  unfold concat_along 
+--  constructor
+--  ·  
+--    sorry
+--  · 
+--    sorry
 end
