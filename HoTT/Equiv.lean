@@ -17,4 +17,6 @@ fun f ↦ (Σ (g : β → α), ((x : β) → f (g x) =' x) × (Σ (h : β → α
 
 def Equiv (α : Type u) (β : Type v) := Σ (f : α → β), isEquiv f
 
+notation:60 α " ≃ " β => Equiv α β
+
 end Equiv

@@ -1,0 +1,74 @@
+\documentclass[9pt]{article}
+
+% ---------- Packages ----------
+\usepackage[a4paper,margin=0.7in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\setlist{nosep}
+
+% ---------- Formatting ----------
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\titlespacing*{\section}{0pt}{1em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+% ---------- Theorem Environments ----------
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{axiom}{Axiom}
+
+% ---------- Macros ------------
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\deq}{\equiv}
+\newcommand{\eqv}{\simeq}
+\newcommand{\Prod}[2]{\prod_{(#1)}{#2}}
+\newcommand{\Sum}[2]{\sum_{(#1)}{#2}}
+\newcommand{\inl}{\mathsf{inl}}
+\newcommand{\inr}{\mathsf{inr}}
+\newcommand{\ind}{\mathsf{ind}}
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\2}{\mathbf{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\W}[3]{\mathsf{W}_{(#1:#2)}#3(#1)}
+\newcommand{\w}{\W{a}{A}{B}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\base}{\mathsf{base}}
+
+\makeatletter
+\DeclareRobustCommand{\sqcdot}{\mathbin{\mathpalette\morphic@sqcdot\relax}}
+\newcommand{\morphic@sqcdot}[2]{%
+  \sbox\z@{$\m@th#1\centerdot$}%
+  \ht\z@=.33333\ht\z@
+  \vcenter{\box\z@}%
+}
+\makeatother
+
+% ---------- Title ----------
+\title{\textbf{Draft: A Review of Type Theories: Martin L\"of, Homotopy and Cubical}\\
+\large A Short Review}
+\author{Naveen Maurya}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\input{sections/introduction}
+\input{sections/typetheory}
+\input{sections/HoTT}
+\input{sections/cubical}
+
+% ---------- References ----------
+\bibliographystyle{plain}
+
+\end{document}

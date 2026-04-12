@@ -1,0 +1,111 @@
+\section{A Brief Description of Type Theory}
+
+We shall describe a standard version of type theory called Martin-L\"of Type Theory (MLTT).
+Set theoretic foundations usually consist of a number of \textit{axioms}, written in the language of 
+first-order logic, which is separately assumed beforehand. The logic's deductive system dictates how 
+inferences can be made (how the logic behaves), while the \textit{axioms} only define and describe sets and
+how they behave. This forms a basis to build mathematics, using sets to describe mathematical
+objects.
+However, MLTT combines both of these together into the deductive system itself. The
+deductive system consists of the primitive notion of `types', the building blocks
+for mathematical objects here, and specifies by itself how they ought to behave.
+
+MLTT consists of \textit{rules} for deriving \textit{judgements}, which are either of the form
+$ a : A$ meaning `$a$ is a term/instance of type A', or $a \deq b : A$ meaning `$a$ is judgementally equal to $b$'.
+Judgemental equality is a strict notion of equality which classifies objects which are definitionally
+the same within the intrinsic language of the theory.
+A separate notion `propositional equality', denoted with $=$, is a weaker but more faithful to the 
+original notion of equality of mathematical objects.
+
+The language of MLTT is an extension of dependently-typed $\lambda$-calculus, with variables
+$x_1, x_2, \ldots$, primitive constants $c, c', c'', \ldots$, and defined constants $f, f', f''$,
+with terms $t, t', t'', \ldots$ given by the grammar 
+\begin{align*}
+  t \to x \mid \lambda x.t \mid t(t') \mid  c \mid f
+\end{align*}
+
+\subsection{Universes}
+
+Type Theory `postulates' a sequence of cumulative universes à la Russell,
+  $\U_0, \U_1, \U_2, \ldots$
+with
+\begin{itemize}
+  \item $\U_i : \U_{i+1}$ for each $i$ 
+  \item If $A : \U_i$, then $A : \U_{i+1}$ 
+\end{itemize}
+Any type in the theory is an instance of some universe in this chain. Each universe is also a type,
+and an instance of unvierses above it in this heirarchy. But unless necessary, we omit the index from
+the universe and write $A : \U$.
+
+\textit{\textbf{Remark.} This sequence, while indexed by natural numbers, is not related to the Natural 
+Numbers that will be defined in the theory. The indices are coming from the metatheory,
+We shall see, the arithmetic object of Natural Numbers $(\N)$ is richer and needs more
+information to be properly defined.}
+
+\subsection{Logic}
+
+\subsection{Type Formers and Inductive Types}
+The rest of the deductive rules of Type Theory go on to give schemas to construct, manipulate, and
+eliminate various constructions (known as type formers/inductive types). A number of these
+constructions are \textit{synthetically} baked into the deductive system, known as \textit{type formers}.
+Type Theories also allow the user to define their own constructions, known as inductive types,
+requiring the same criteria to be defined. 
+
+The general scheme for these type formers/inductive types is as follows. An type former/inductive type is defined by:
+\begin{itemize}
+  \item A list of \textbf{\textit{formation rules}}, describing how the inductive type can be
+    introduced into context.
+\item A list of \textbf{\textit{constructors/indroduction rules}}, to introduce new terms of these types.
+\item \textbf{\textit{Elimination rules}} to give a recipe how to use/consume elements of the type. \\
+    (Usually, this involves a \textit{recursion principle} to define functions on the type, and a
+    stronger \textit{induction principle} to define dedependent functions on the type.)
+\item A \textbf{\textit{computation rule}}, that tells how the elimination acts on the constructors. 
+\end{itemize}
+
+Here is a brief, informal description of these type formmers in Type Theory. A detailed, formal description
+is avaiable in Appendix I [].
+
+\subsection{Custom Inductive Types}
+Type Theories provide a schema to build newer, user-defined inductive types as well.
+Conceptually, an inductive type is a type \textit{freely generated} by a number of constructors, which may involve functions
+that output the given type by (possibly) taking as input terms of the same type. This intuition needs
+to be formalized carefully so as to ensure that only meaningful inductive types may be constructed.
+
+\textit{\textbf{Remark.} Inductive types are objects 
+one can perform induction on! The induction principle from Natural Numbers can be extended more generally, 
+To prove a statement about all of $\N$, one simply needs to prove
+it for $0$ and given it is true for $n$, prove it for $\mathsf{succ} (n)$. \\
+Similarly, the \textit{induction principle} for a given inductive type is the statement that to prove a
+statement for all its instances, it suffices to prove it in a few special cases, built on the constructors
+of the type.}
+
+\subsubsection{W-Types}
+There is a complete formalism of inductive types upto certain demands for the constructors.
+
+\begin{definition}[W-Types]
+  Given $A : \U, B : A \to \U$, the W-Type $\W{a}{A}{B}$ is defined by the constructor
+  \[
+    \mathsf{sup} : \left(\Prod{a:A}{B(a) \to \W{a}{A}{B}} \right) \to \W{x}{A}{B}
+  \]
+  and the induction principle, to prove $E : \w \to \U$ for all elements of $\w$, it suffices
+  to prove it for $\mathsf{sup}(a,f)$ for each $a : A$, and $f : (B(a) \to \w)$, assuming it holds
+  for all $f(b)$ with $b : B(a)$.
+\end{definition}
+
+A W-Type $\w$ may be interpreted as the type of well-founded trees with $A$-many ways to branch out from
+each node, corresponding to a constructor.
+Each $a : A$ corresponds to a constructor, each of which take $B(a)$-many instances of $\w$
+as branch nodes. The type $\w$ is the type of objects \textit{freely generated} by these constructors.
+If an inductive type may be expressed equivalently as generated by $\mathsf{sup}$ as described, it can be formalized as a W-Type.
+
+\begin{itemize}
+  \item The boolean type $\2$ is equivalently expressed as the W-Type $\w$ where 
+    $A \deq \2$ with $B(0_2) \deq \0$ and $B(1_2) \deq \0$, that is generated by 
+    two constructors, $0_2 : \2$ and $1_2 : \2$.
+  \item The natural numbers type $\N$ is equivalent to $\w$ where $A \deq \2$,
+    with $B(0_2) \deq \0$ and $B(1_2) \deq \1$, i.e., generated by two constructors,
+    corresponding to $\mathsf{zero : \N}$, and $\mathsf{succ} : \N \to \N$.
+  \item The type $\W{x}{\1+A}{B}$ with $B(\inl (\star)) \deq \0$ and $B(\inr (a)) \deq \1$,
+    corresponds to the type $\mathsf{List}(A)$ of finite length strings over the alphabet $A$, i.e.
+    generated by $\mathsf{nil} : \mathsf {List}(A)$ and $\mathsf{cons} : A \to \mathsf{List}(A) \to \mathsf{List}(A)$.
+\end{itemize}
