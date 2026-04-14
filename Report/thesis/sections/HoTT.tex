@@ -1,23 +1,24 @@
 \section{Homotopy Type Theory}
 
 Homotopy Type Theory (HoTT) extends MLTT by introducing a topological/homotopical interpretation
-of types, an interpretation of 
+of types.
 
 \subsection{A Homotopical Intepretation}
 In HoTT, types can be interpretated as either topologically as spaces, 
 or as $\infty$-groupoids from higher-dimensional category theory.
 Any topological space can be classified upto homotopy equivalence by considering its \textit{fundamental
 $\infty$-groupoid}. This follows from the fundamental $\infty$-groupoid construction being adjoint 
-to the geometric realization functor. (This is the \textit{homotopy hypothesis/theorem}).[Pursuing Stacks]
+to the geometric realization functor. (This is the \textit{homotopy hypothesis/theorem}), first talked about in Grothendieck's 
+\emph{Pursuing Stacks}~\cite{grothstacks}.
 
 \subsection{Identity Types}
 The precise manner in which types correspond to spaces or $\infty$-groupoids is demonstrated by
 constructing an associated $\infty$-groupoid.
 
 In the homotopy interpretation, the identity type $\mathsf{Id}_A(x,y)$ corresponds to the space of 
-paths from $a : A$ to $b : B$ endowed with the compact-open topology. $\refl_x$ is the
+paths from $x : A$ to $y : A$ endowed with the compact-open topology. $\refl_x$ is the
 constant path at $x$.
-
+The iterated path type, $\mathsf{Id}_{\mathsf{Id}_A(x,y)}(p,q)$ corresponds to $2$-dim paths/homotopies between $p, q : x =_A y$, and so on...
 \begin{proposition}
   Given $x, y, z : A$, there exist the following maps 
   \begin{itemize}
@@ -26,9 +27,9 @@ constant path at $x$.
   \end{itemize}
 \end{proposition}
 \textit{Proof.} (i) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Now simply exhibit $\mathsf{id}_{x =_A x} \deq (\lambda a.a)$. 
-(ii) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Exhibit $(\lambda a.b.b)$. \qed
+(ii) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Exhibit $(\lambda a.\lambda b.b)$. \qed
 
-Denote the map in $(i)$ as $(-)^{-1}$, and $(ii)$ as $(- \sqcdot -)$. Then we have the following results.
+Denote the map in $(i)$ as $(-)^{-1}$, and $(ii)$ as $(- \sqcdot -)$. 
 
 \begin{proposition} Let $x, y, z, w : A$, $p : x =_A y, q : y =_A z$ and $r : z =_A w$. Then we have:
   \begin{itemize}
@@ -37,42 +38,77 @@ Denote the map in $(i)$ as $(-)^{-1}$, and $(ii)$ as $(- \sqcdot -)$. Then we ha
     \item [(iii)] $(p \sqcdot q) \sqcdot r = p \sqcdot (q \sqcdot r)$ 
    \end{itemize} 
 \end{proposition}
-\textit{Proof.} Follows from path induction. \qed
+\textit{Proof.} (i) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Now exhibit $\refl_{\refl_x}$ or $\refl_{\refl_y}$.
+(ii) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Exhibit $\refl_{\refl_x}$ or $\refl_{\refl_y}$.
+(iii) By path induction, assume $y \deq z$ and $q \deq \refl_y$. Exhibit $\refl_p$ to obtain $(p \sqcdot q) \deq  p$,
+and similarly $\refl_r$ to obtain $(q \sqcdot r) \deq r$. Our goal reduces to $p \sqcdot r = p \sqcdot r$.
+Exhibit $\refl_{p \sqcdot r} : p \sqcdot r = p \sqcdot r$.
+\qed
 
 A remarkable feature is that while (i) and (ii) can be proven judgementally, (iii) is only true propositionally,
 i.e., upto a path in the higher path space.
 Strikingly, we also have all the required higher coherences propositionally using only path induction.
-This gives us the (weak) $\infty$-groupoid interpretation. 
+This gives us the (weak) $\infty$-groupoid interpretation which is made functorial by the following result.
 
-\subsection{Axioms of Function Extensionality and Univalence}
+\begin{proposition}
+Let $f : A \to B, g : \Prod{a:A}{P(a)}, x, y : A$, and $p : x =_A y$, then we have the following: 
+  \begin{itemize}
+    \item [(i)] (Application) $\mathsf{ap}_f(p) : (f(x) =_B f(y))$
+    \item [(ii)] (Transport) $p_* : P(x) \to P(y)$ 
+    \item [(iii)] (Dependent Application) \\ $\mathsf{apd}_g(p) : (p_*(g(x)) =_{P(y)} g(y))$ 
+  \end{itemize}
+\end{proposition}
+\textit{Proof.} For all, use path induction. Assume $x \deq y$ and $p \deq \refl_x$ for all.
+(i) Exhibit $\refl_{f(x)}$.
+(ii) Exhibit $\mathsf{id}_{P(x)} :\deq (\lambda z.z)$.
+(iii) Exhibit $\refl_{g(x)}$.
+\qed
+
+\subsection{Axioms in HoTT}
 Some expected semantic behaviour does not directly follow from the machinery of HoTT laid out so far. To enforce such behaviour
-we introduce a few `axioms' into our theory, which are merely inhabitants of some type without an inductive construction.
+we introduce a few `axioms' into our theory, which are merely inhabitants of some type without an inductive construction. But first,
+we make some definitions.
+
+\begin{definition}[Homotopy of maps] 
+  Let $f, g : \Prod{x:A}{B(a)}$, then we say $f$ is homotopic to $g$, denoted
+  \[
+    (f \sim g) :\deq \Prod{x:A}{(f(x) =_{B(x)} g(x))}
+  \]
+\end{definition}
+
+\begin{definition}[Equivalence]
+  Let $A, B : \U$. We say $A$ and $B$ are (homotopy) equivalent if there is an inhabitant of 
+  \[
+    (A \eqv B) :\deq \Sum{f : A \to B}{\Sum{g : B \to A}{(g \circ f \sim \id_A) \times (f \circ g \sim \id_B)}}
+  \]
+\end{definition}
 
 The notion of equality for functions is too restrictive to capture their expected behaviour.
 Classically, we expect two functions to be equal if they take the same values on all the inputs.
 To ensure semantic well-behavedness, we must enforce this as an axiom.
 
 \begin{axiom}[Function Extensionality]
-   Let $f, g : \Prod{x:A}{B(a)}$, then we have
-   \[     (f = g) \eqv \left( \Prod{x:A}{f(x) =_{B(x)} g(x)} \right)    \]
+   Let $A : \U, B : A \to \U$ and $f, g : \Prod{x:A}{B(a)}$, then we have
+   $    (f = g) \eqv (f \sim g)$. 
 \end{axiom}
-In, Voevodsky proposed the univalence axiom, \textit{}
+That is, equality of maps is characterized entirely by their values in the codomain.
+In particular, if two functions are homotopic, they are equal.
+
+In [], Voevodsky proposed the univalence axiom, which is inspired from the mathematical practice of identifying
+isomorphic objects.
 \begin{axiom}[Univalence]
   For $A, B : \U$, there is an equivalence:
-  \[(A =_{\U} B) \eqv (A \eqv B)\]
+  $(A =_{\U} B) \eqv (A \eqv B) $
 \end{axiom}
 In particular, if $A \eqv B$, then $A =_{\U} B$.
-Roughly speaking, this means ``isomorphic ojects are equal''. 
-In a univalent universe $\U$, isomrphic objects/equivalent types can be treated as equal and one can transport 
+Roughly speaking, this means ``isomorphic objects are equal''. 
+In a univalent universe $\U$, isomorphic objects/equivalent types can be treated as equal and one can transport 
 (theorems/proofs/properties) across them.
 
 \subsection{Higher Inductive Types}
 
-Following this interpretation, HoTT allows us to extend 
-our domain of inductive definitions, from standard $W$-types which are types generated freely by 
-its constructors, to types generated by constructors along with relations.
-
-We allow the constructors to also be higher-dimensional paths between points. In this manner, 
+We can now expand to types generated by constructors along with relations.
+We let the constructors possibly be higher-dimensional paths between points. This way, 
 free generation is equivalent to generation on points quotiented by relations (corresponding to these higher paths).
 
 Such a \textit{higher inductive type} hardcoded in HoTT is the circle type $\Sph^1$ generated by the constructors
@@ -80,10 +116,10 @@ Such a \textit{higher inductive type} hardcoded in HoTT is the circle type $\Sph
   \item A point $\base : \Sph^1$
   \item A path $ \mathsf{loop} : \base =_{\Sph^1} \base $
 \end{itemize}
-This inductive type corresponds to a chosen basepoint $\base$, and a nontrivial path $\mathsf{loop}$ connected the basepoint,
-giving topologically a circle.
+This corresponds to a chosen basepoint $\base$, and a nontrivial path $\mathsf{loop}$ connected the basepoint,
+giving a circle.
 
-One can build many of the familiar mathematical objects such as the integers, higher spheres, CW-complexes etc. using
-this general schema. Various approaches exist to formalize such a schema, but have only yeilded partial satisfaction.
+Many familiar mathematical objects such as the integers, CW-complexes etc. can be built using
+this schema. Various approaches exist to formalize such a schema, but have only yeilded partial satisfaction. 
 Some of the existing approaches are using Quotient Inductive Types [], Homotopy Initial Algebras [], and computationally
-most satisfactory, Cubical Type Theory []. A satisfactory formalism remains an open problem.
+most satisfactory, Cubical Type Theory []. A completely satisfactory formalism remains an open problem.

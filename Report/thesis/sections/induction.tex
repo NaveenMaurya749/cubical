@@ -1,18 +1,3 @@
-\subsubsection{Function Types}
-Function Types are another primitive construction. Given $A, B : \U$, we have the type of functions $A \to B$, 
-the instances of which are functions $f : A \to B$, which given $a : A$, give $f(a)$ (function application/elimination)
-as an instance of $B$. The introduction for a function can be done by specifying a formula in $\lambda$-notation 
-\begin{align*}
-  f :\deq (\lambda x . \Phi)
-\end{align*}
-where $\Phi$ is a formula with variable $x$. 
-The compuation rule is
-\begin{align*}
-  (\lambda x.\Phi) (a) \deq \Phi[a/x]
-\end{align*}
-where $[a/x]$ represents replacing each occurence of $x$ in $\Phi$ by $a$, called $\beta$-reudction.
-Note, $f \deq (\lambda x. f x)$.
-
 \subsubsection{Dependent Function Types ($\Pi$-types)}
 There is an extension of function types, of `dependent functions' where the codomain type may depend
 on the doamin. Given $A : \U, B : A \to \U$, the type of dependent functions is

@@ -1,1 +1,155 @@
+\section{Induction}
+The rest of the deductive rules of Type Theory go on to give schemas to construct, manipulate, and
+eliminate various constructions (known as type formers/inductive types). A number of these
+constructions are \textit{synthetically} baked into the deductive system, known as \textit{type formers}.
+Type Theories also allow the user to define their own constructions, known as inductive types,
+requiring the same criteria to be defined. 
 
+The general scheme for these type formers/inductive types is as follows. An type former/inductive type is defined by:
+\begin{itemize}
+  \item A list of \textbf{\textit{formation rules}}, describing how the inductive type can be
+    introduced into context.
+\item A list of \textbf{\textit{constructors/indroduction rules}}, to introduce new terms of these types.
+\item \textbf{\textit{Elimination rules}} to give a recipe how to use/consume elements of the type. \\
+    (Usually, this involves a \textit{recursion principle} to define functions on the type, and a
+    stronger \textit{induction principle} to define dependent functions on the type.)
+\item A \textbf{\textit{computation rule}}, that tells how the elimination acts on the constructors. 
+\item An (optional) \textbf{\textit{uniqueness principle}}, dictating how each element of the type
+  is uniquely determined by the result of elimination rules applied to it.
+\end{itemize}
+
+Here is a brief, informal description of these type formmers in Type Theory. Each of them also have a logical interpretation
+to them under `propositions as types'. A detailed, formal description
+is avaiable in Appendix I of \cite{HoTT}.
+
+\subsection{Some Type Formers/Inductives}
+\subsubsection{Function Types}
+Given $A, B : \U$, we can form $A \to B : \U$, the type of functions from $A$ to $B$,
+syntactically given by a simple $\lambda$-calculus. Introducing a function can be done by specifying a 
+formula as $(\lambda x.\Phi)$ where $\Phi$ is a formula in the variable $x$. Elimination is performed by
+evaluation, computed as $(\lambda x.\Phi)(a) \deq \Phi[a/x]$, replacing all occurences of $x$ with $a$.
+We get $f(a) : B$ for any $f : A \to B, a : A$.
+
+Iterated function types such as $A \to (B \to C))$ are effectively multivarible function types (this is called currying, due to Product-Exponential adjunction),
+so the parentheses are omitted and associated by right from default, like $A \to B \to C$.
+Currying is also used in lambda notation, writing $(\lambda x.\lambda y.\Phi)$ instead of $(\lambda x.(\lambda y.\Phi))$.
+
+Logically, $A \to B$ correponds to $A \implies B$.
+
+\subsubsection{Dependent Function Types ($\Pi$-types)}
+Given $A : \U, B : A \to \U$, the type of dependent functions is $\Prod{x:A} B(x)$, functions with
+codomain dependent on the domain. They follow exactly the same rules as regular function types, but $f(a) : B(a)$
+for $a : A, f : \Prod{a:A}{B(a)}$.
+
+Logically, $\Pi$-types correspond to for-all predicates ($\forall$).
+
+\subsubsection{Product Types}
+Given $A, B : \U$, the product type $A \times B : \U$ consists of pairs $(a, b)$, given by $a : A, b : B$. 
+Let $E : A \times B \to \U$, then to define $f : \Prod{z:A\times B}{E(z)}$, it suffices to define $f$
+for the special case where $x \deq (a,b)$ for some $a : A, b : B$. This is the \textit{induction principle}, denoted
+$\mathsf{ind}_{A\times B}$. The computation rule enforces the defined function matches in the special case.
+Formally, this is
+\[
+  \mathsf{ind}_{A \times B} : \Prod{E : A \times B \to \U}{\left(\Prod{x:A}{\Prod{y:B} E((x,y))} \to \Prod{z:A \times B} E(z)\right)}
+\]
+with the computation rule
+\[
+  \mathsf{ind}_{A \times B} (E, g, (a,b)) \deq g(a)(b)
+\]
+But from now on we'll often condense this into informal language for convenience.
+
+Logically, $A \times B$ corresponds to $A \land B$.
+
+\subsubsection{Coproduct Types}
+Given $A, B : \U$, the coproduct type $A + B$ is given by two generators $\inl : A \to A + B$, and $\inr : B \to A + B$.
+For its induction principle, to define a function $f : \Prod{z : A + B} E(z)$, it suffices to define $f$ for the 
+special case where $z \deq \inl (x)$ and the case where $z \deq \inr (y)$.
+
+Logically, $A + B$ corresponds to $ A \lor B$.
+
+\subsubsection{Dependent Pair Types ($\Sigma$-types)}
+This is the dependent version of a product type. Given $A : \U, B : A \to \U$, we have $\Sum{a:A}{B(a)} : \U$.
+Say $a : A, b : B(a)$, one can form $(a,b) : \Sum{a:A}{B(a)}$. 
+Let $E : \Sum{a:A}{B(a)} \to \U$. To define $f : \Prod{c:\Sum{a:A}{B(a)}} {E(c)}$, it suffices to define
+$f$ in the special case where $c \deq (a,b)$ for some $a : A, b : B(a)$.
+
+Logically, $\Sigma$-types correspond to there-exists predicate $(\exists)$.
+
+\subsubsection{0, 1 and 2}
+The empty type $\0$ is the type with no constructors, and the induction principle, that to define
+$f : \Prod{x:\0}{E(x)}$, it suffices to \textit{not define anything}. By default, we have a function,
+$\Prod{x:\0}{E(x)}$.
+
+The unit type $\1$ is the type with a single constructor, $\star : \1$. The induction principle says that
+to define $f : \Prod{x:\1}{E(x)}$, it suffices to define $f$ for $x \deq \star$.
+
+The boolean type $\2$ is the type with two constructors, $0_2 : \2$ and $1_2 : \2$. To define 
+$f : \Prod{x:\2}{E(x)}$, it suffices to define for $x \deq 0_2$ and $x \deq 1_2$.
+Alternatively, one can define $\2 :\deq \1 + \1$.
+
+Logically, $\0$ is a contradiction ($\bot$) and $\1$ is True ($\top$).
+
+\subsubsection{Natural Numbers Type ($\N$)}
+The natural numbers type is the prototypical example of an \textit{Inductive Type}. It is generated by the constructors
+\begin{itemize}
+  \item $\mathsf{zero} : \N$
+  \item $\mathsf{succ} : \N \to \N$
+\end{itemize}
+Let $E : \N \to \U$. Then to define $E(n)$ for all $n: \N$, it suffices to define it for the following special case 
+$n \deq \mathsf{zero}$, and for all $m : \N$, given $f(m)$ define it for $n \deq \mathsf{succ}(m)$.
+(This is almost the usual principle of mathematical induction!)
+
+\subsubsection{Identity Types}
+Given $A : \U$, we have the identity type family $\Id_A : A \to A \to \U$. Given $x, y: A$, we have $\Id_A(x,y)$, also denoted as
+$x =_A y$, which is the type of all \textit{propositional equalities} between $x$ and $y$. The introduction rule is by using
+$\refl : \Prod{a:A} (a =_A a)$. Identities being types themselves allows equality of objects to also 
+be treated as points, susceptible to comparison with other equalities, and thus proofs of equalities as mathematical objects susceptible to proof of equality, ad infinitum.
+Thus, one obtains an infinite-order logic as opposed to set theory's first-order.
+
+The induction principle for Identity Types is called path induction, which says 
+given $C : \Prod{x, y : A} (x =_A y) \to \U$, a function $c : \Prod{x : A}{C(x,x,\refl_x)},$
+there is a function $f : \Prod{x,y : A}{\Prod{p: x =_A y} C(x,y,p)}$ such that $f(x,x,\refl_x) :\deq c(x)$.
+That is, to define a function on paths between points in $A$, it suffices to exhibit a function on all
+reflexive loops $\refl_x$ over all points $x : A$.
+
+\subsection{Custom Inductive Types}
+Type Theories provide a schema to build newer, user-defined inductive types as well.
+Conceptually, an inductive type is a type \textit{freely generated} by a number of constructors, which may involve functions
+that output the given type by (possibly) taking as input terms of the same type. This intuition needs
+to be formalized carefully so as to ensure that only meaningful inductive types may be constructed.
+
+\textit{\textbf{Remark.} Inductive types are objects one can perform induction on! 
+Similarly to $\N$, the \textit{induction principle} for a given inductive type is the statement that to prove a
+statement for all its instances, it suffices to prove it in a few special cases, built on the constructors
+of the type.}
+
+\subsubsection{W-Types}
+There is a complete formalism of inductive types up to certain demands for the constructors.
+
+\begin{definition}[W-Types]
+  Given $A : \U, B : A \to \U$, the W-Type $\W{a}{A}{B}$ is defined by the constructor
+  \[
+    \mathsf{sup} : \left(\Prod{a:A}{B(a) \to \W{a}{A}{B}} \right) \to \W{x}{A}{B}
+  \]
+  and the induction principle, to prove $E : \w \to \U$ for all elements of $\w$, it suffices
+  to prove it for $\mathsf{sup}(a,f)$ for each $a : A$, and $f : (B(a) \to \w)$, assuming it holds
+  for all $f(b)$ with $b : B(a)$.
+\end{definition}
+
+A W-Type $\w$ may be interpreted as the type of well-founded trees with $A$-many ways to branch out from
+each node, corresponding to a constructor.
+Each $a : A$ corresponds to a constructor, each of which take $B(a)$-many instances of $\w$
+as branches. The type $\w$ is the type of objects \textit{freely generated} by these constructors.
+If an inductive type may be expressed equivalently as generated by $\mathsf{sup}$ as described, it can be formalized as a W-Type.
+
+\begin{itemize}
+  \item The boolean type $\2$ is equivalent to the W-Type $\w$ where 
+    $A \deq \2$ with $B(0_2) \deq B(1_2) \deq \0$, that is generated by 
+    two constructors, $0_2 : \2$ and $1_2 : \2$.
+  \item The natural numbers type $\N$ is equivalent to $\w$ where $A \deq \2$,
+    with $B(0_2) \deq \0$ and $B(1_2) \deq \1$, i.e., generated by two constructors,
+    corresponding to $\mathsf{zero : \N}$, and $\mathsf{succ} : \N \to \N$.
+  \item The type $\W{x}{\1+A}{B}$ with $B(\inl (\star)) \deq \0$ and $B(\inr (a)) \deq \1$,
+    corresponds to the type $\mathsf{List}(A)$ of finite length strings over the alphabet $A$, i.e.
+    generated by $\mathsf{nil} : \mathsf {List}(A)$ and $\mathsf{cons} : A \to \mathsf{List}(A) \to \mathsf{List}(A)$.
+\end{itemize}
