@@ -1,0 +1,51 @@
+\section{Basic Description}
+
+We shall describe a standard version of type theory called (intensional) Martin-L\"of Type Theory (MLTT~\cite{martin1975intuitionistic}). 
+Set theoretic foundations usually consist of a number of \textit{axioms}, written in the language of 
+first-order logic, which is separately assumed beforehand. The logic's deductive system provides rules for making  
+inferences, while the \textit{axioms} define and describe sets and
+their semantics. This forms a basis to build mathematics, using sets to describe mathematical
+objects, while manipulating statements via first-order logic.
+MLTT conserves the dependence on axioms and constructs more machinery within the deductive system itself. The
+deductive system consists of the primitive notion of `types', the building blocks
+for mathematical objects as well as the logic, while specifying the rule that govern them. 
+
+MLTT consists of \textit{rules} for deriving \textit{judgements}, which are either of the form
+$ a : A$ meaning `$a$ is a term/instance of type A', or $a \deq b : A$ meaning `$a$ is judgementally equal to $b$',
+while both being instances of $A$.
+Judgemental equality is a strict notion of equality which classifies objects as definitionally
+the same within the intrinsic language of the formal system.
+A separate notion `propositional equality', denoted with $=$, is a weaker notion of equality, corresponding
+to the equality of the mathematical objects to be described. This is only a feature of \emph{intensional} MLTT.
+
+The language of MLTT is an extension of dependently-typed $\lambda$-calculus, with variables
+$x_1, x_2, \ldots$, primitive constants $c, c', c'', \ldots$, and defined constants $f, f', f''$.
+The terms $t, t', t'', \ldots$ are given by the grammar 
+\begin{align*}
+  t \to x \mid \lambda x.t \mid t(t') \mid  c \mid f
+\end{align*}
+
+Further, MLTT provides rules to form types from a preexisting context, and rules to manipulate defined or preexisting types 
+to encode their semantics.
+
+The logic of MLTT comes encoding propositions as types, wherein having an term of a `proposition as a type'
+is interpreted as a witness or evidence of the proposition.~\cite{awodey2004propositions} MLTT being an intuitionistic formal system, has a constructive
+logic, which requires any existence proof to be certified by a witness. ~\cite{martin1975intuitionistic}
+
+\subsection{Universes}
+
+Type Theory `postulates' a chain of cumulative universes à la Russell,
+  $\U_0, \U_1, \U_2, \ldots$ as primitive constants
+with
+\begin{itemize}
+  \item $\U_i : \U_{i+1}$ for each $i$ 
+  \item If $A : \U_i$, then $A : \U_{i+1}$ 
+\end{itemize}
+Any type in the theory is an instance of some universe in this chain. Each universe is also a type,
+and an instance of universes above it in this heirarchy. But unless necessary, we omit the index from
+the universe and write $A : \U$.
+
+\textit{\textbf{Remark.} This chain, while indexed by natural numbers, is not related to the Natural 
+Numbers that will be defined in the theory. The indices come the metatheory.
+We shall see the arithmetic object of Natural Numbers $(\N)$ is richer and needs more
+information to be properly defined.}

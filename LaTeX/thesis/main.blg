@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2026/dev/Arch Linux)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: plain.bst
+Database file #1: references.bib
+Warning--empty journal in howard1995formulae
+You've used 20 entries,
+            2118 wiz_defined-function locations,
+            607 strings with 6661 characters,
+and the built_in function-call counts, 6047 in all, are:
+= -- 616
+> -- 207
+< -- 7
++ -- 91
+- -- 64
+* -- 351
+:= -- 998
+add.period$ -- 64
+call.type$ -- 20
+change.case$ -- 86
+chr.to.int$ -- 0
+cite$ -- 21
+duplicate$ -- 272
+empty$ -- 517
+format.name$ -- 64
+if$ -- 1294
+int.to.chr$ -- 0
+int.to.str$ -- 20
+missing$ -- 22
+newline$ -- 103
+num.names$ -- 40
+pop$ -- 111
+preamble$ -- 1
+purify$ -- 72
+quote$ -- 0
+skip$ -- 186
+stack$ -- 0
+substring$ -- 371
+swap$ -- 63
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 72
+warning$ -- 1
+while$ -- 65
+width$ -- 22
+write$ -- 219
+(There was 1 warning)
