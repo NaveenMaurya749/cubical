@@ -1,68 +1,39 @@
 \section{Homotopy Type Theory}
 
-Homotopy Type Theory (HoTT) extends MLTT by introducing a topological/homotopical interpretation
+Homotopy Type Theory (HoTT) extends MLTT by adopting a homotopical interpretation
 of types.
+It is enriched by principles such as the \emph{univalence axiom} and \emph{higher inductive types}, 
+enabling the direct construction of spaces with specified higher path structure and supporting reasoning up to homotopy.
 
 \subsection{A Homotopical Intepretation}
-In HoTT, types can be interpretated as either topologically as spaces, 
-or as $\infty$-groupoids from higher-dimensional category theory.
-Any topological space can be classified upto homotopy equivalence by considering its \textit{fundamental
-$\infty$-groupoid}. This follows from the fundamental $\infty$-groupoid construction being adjoint 
-to the geometric realization functor. (This is the \textit{homotopy hypothesis/theorem}), first talked about in Grothendieck's 
-\emph{Pursuing Stacks}~\cite{grothstacks}.
+In HoTT, types can be interpretated either topologically as spaces, 
+or as (weak) $\infty$-groupoids from higher-dimensional category theory.
+A topological space weakly homotopy equivalent to a CW-complex can be classified upto homotopy equivalence by considering its \textit{fundamental
+(weak) $\infty$-groupoid}.~\cite{lurie, quillen2006homotopical} This follows from the fundamental $\infty$-groupoid construction being adjoint 
+to the geometric realization functor. (This is the \textit{homotopy hypothesis/theorem}, introduced by Grothendieck in \emph{Pursuing Stacks}~\cite{grothstacks}).
 
 \subsection{Identity Types}
 The precise manner in which types correspond to spaces or $\infty$-groupoids is demonstrated by
-constructing an associated $\infty$-groupoid.
+establishing an associated $\infty$-groupoid.
 
-In the homotopy interpretation, the identity type $\mathsf{Id}_A(x,y)$ corresponds to the space of 
-paths from $x : A$ to $y : A$ endowed with the compact-open topology. $\refl_x$ is the
+In the homotopy interpretation, terms of a type are thought of a points, and the identity type $\mathsf{Id}_A(x,y)$ corresponds to the space of 
+paths from $x : A$ to $y : A$ endowed with the compact-open topology. This is exactly the free path space $PA$.~\cite{tom2008algebraic} $\refl_x$ is the
 constant path at $x$.
-The iterated path type, $\mathsf{Id}_{\mathsf{Id}_A(x,y)}(p,q)$ corresponds to $2$-dim paths/homotopies between $p, q : x =_A y$, and so on...
-\begin{proposition}
-  Given $x, y, z : A$, there exist the following maps 
-  \begin{itemize}
-    \item [(i)] $(x = y) \to (y = x)$
-    \item [(ii)] $(x = y) \to (y = z) \to (x = z)$
-  \end{itemize}
-\end{proposition}
-\textit{Proof.} (i) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Now simply exhibit $\mathsf{id}_{x =_A x} \deq (\lambda a.a)$. 
-(ii) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Exhibit $(\lambda a.\lambda b.b)$. \qed
+The iterated path type, $\mathsf{Id}_{\mathsf{Id}_A(x,y)}(p,q)$ corresponds to the iterated free path space $P^2 A$.
+Note that $h : \mathsf{Id}_{\mathsf{Id}_A(x,y)}(p,q)$ are homotopies from $p$ to $q$.
+And similarly the $n$-th iterated path type corresponds to the $n$-th path space $P^n A$. 
 
-Denote the map in $(i)$ as $(-)^{-1}$, and $(ii)$ as $(- \sqcdot -)$. 
+We can extract the (weak) $\infty$-groupoid structure from this observation with a few arguments.
 
-\begin{proposition} Let $x, y, z, w : A$, $p : x =_A y, q : y =_A z$ and $r : z =_A w$. Then we have:
-  \begin{itemize}
-    \item [(i)] $p = \refl_x \sqcdot p$, and $p = p \sqcdot \refl_y$
-    \item [(ii)] $p \sqcdot p^{-1} = \refl_x$ and $p^{-1} \sqcdot p = \refl_y$
-    \item [(iii)] $(p \sqcdot q) \sqcdot r = p \sqcdot (q \sqcdot r)$ 
-   \end{itemize} 
-\end{proposition}
-\textit{Proof.} (i) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Now exhibit $\refl_{\refl_x}$ or $\refl_{\refl_y}$.
-(ii) By path induction, assume $x \deq y$ and $p \deq \refl_x$. Exhibit $\refl_{\refl_x}$ or $\refl_{\refl_y}$.
-(iii) By path induction, assume $y \deq z$ and $q \deq \refl_y$. Exhibit $\refl_p$ to obtain $(p \sqcdot q) \deq  p$,
-and similarly $\refl_r$ to obtain $(q \sqcdot r) \deq r$. Our goal reduces to $p \sqcdot r = p \sqcdot r$.
-Exhibit $\refl_{p \sqcdot r} : p \sqcdot r = p \sqcdot r$.
-\qed
-
-A remarkable feature is that while (i) and (ii) can be proven judgementally, (iii) is only true propositionally,
-i.e., upto a path in the higher path space.
-Strikingly, we also have all the required higher coherences propositionally using only path induction.
-This gives us the (weak) $\infty$-groupoid interpretation which is made functorial by the following result.
-
-\begin{proposition}
-Let $f : A \to B, g : \Prod{a:A}{P(a)}, x, y : A$, and $p : x =_A y$, then we have the following: 
-  \begin{itemize}
-    \item [(i)] (Application) $\mathsf{ap}_f(p) : (f(x) =_B f(y))$
-    \item [(ii)] (Transport) $p_* : P(x) \to P(y)$ 
-    \item [(iii)] (Dependent Application) \\ $\mathsf{apd}_g(p) : (p_*(g(x)) =_{P(y)} g(y))$ 
-  \end{itemize}
-\end{proposition}
-\textit{Proof.} For all, use path induction. Assume $x \deq y$ and $p \deq \refl_x$ for all.
-(i) Exhibit $\refl_{f(x)}$.
-(ii) Exhibit $\mathsf{id}_{P(x)} :\deq (\lambda z.z)$.
-(iii) Exhibit $\refl_{g(x)}$.
-\qed
+Let $\U$ be fixed and $A : \U$. Define $\Id^0(A) :\deq A$ and $\Id^{\mathsf{succ}(n)} :\deq \Sum{x,y : \Id^n(A)}{(x =y)}$ 
+\begin{theorem}
+  There is a functorial association of types to weak $\infty$-groupoids, where $A : \U$ maps to the infinity groupoid where $n$-th level objects are terms of 
+  $\Id^n(A)$.
+\end{theorem}
+The idea of the proof is to construct inverse and concatenation operations at a fixed level, and showing they follow
+unit, inversion and associativity laws upto terms of a higher level (via path induction). Finally, showing functoriality (across independent
+and dependent functions) also follows from path induction.
+A full walkthrough for this is laid out in Chapter 2 of \cite{HoTT}.
 
 \subsection{Axioms in HoTT}
 Some expected semantic behaviour does not directly follow from the machinery of HoTT laid out so far. To enforce such behaviour
@@ -94,8 +65,7 @@ To ensure semantic well-behavedness, we must enforce this as an axiom.
 That is, equality of maps is characterized entirely by their values in the codomain.
 In particular, if two functions are homotopic, they are equal.
 
-In [], Voevodsky proposed the univalence axiom, which is inspired from the mathematical practice of identifying
-isomorphic objects.
+In~\cite{voevodsky2014equivalence}, Voevodsky proposed the first variant of the univalence axiom.
 \begin{axiom}[Univalence]
   For $A, B : \U$, there is an equivalence:
   $(A =_{\U} B) \eqv (A \eqv B) $
@@ -103,15 +73,15 @@ isomorphic objects.
 In particular, if $A \eqv B$, then $A =_{\U} B$.
 Roughly speaking, this means ``isomorphic objects are equal''. 
 In a univalent universe $\U$, isomorphic objects/equivalent types can be treated as equal and one can transport 
-(theorems/proofs/properties) across them.
+(theorems, proofs and properties) across them.
 
 \subsection{Higher Inductive Types}
 
 We can now expand to types generated by constructors along with relations.
-We let the constructors possibly be higher-dimensional paths between points. This way, 
-free generation is equivalent to generation on points quotiented by relations (corresponding to these higher paths).
+We let the constructors output higher-dimensional paths in the type. This way, 
+free generation is equivalent to generation on points quotiented by equivalence relations corresponding to these higher paths.
 
-Such a \textit{higher inductive type} hardcoded in HoTT is the circle type $\Sph^1$ generated by the constructors
+Such a \textit{higher inductive type} primitive in HoTT is the circle type $\Sph^1$ generated by the constructors
 \begin{itemize}
   \item A point $\base : \Sph^1$
   \item A path $ \mathsf{loop} : \base =_{\Sph^1} \base $
@@ -121,5 +91,5 @@ giving a circle.
 
 Many familiar mathematical objects such as the integers, CW-complexes etc. can be built using
 this schema. Various approaches exist to formalize such a schema, but have only yeilded partial satisfaction. 
-Some of the existing approaches are using Quotient Inductive Types [], Homotopy Initial Algebras [], and computationally
-most satisfactory, Cubical Type Theory []. A completely satisfactory formalism remains an open problem.
+Some of the existing approaches are using Quotient Inductive Types~\cite{altenkirch2016type}, Homotopy Initial Algebras~\cite{sojakova2015higher} , and computationally
+most satisfactory, Cubical Type Theory~\cite{cohen2016cubical, cavallo2021higher}. A completely satisfactory formalism remains an open problem.

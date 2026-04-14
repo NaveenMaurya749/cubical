@@ -1,4 +1,29 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{altenkirch2016type}
+Thorsten Altenkirch and Ambrus Kaposi.
+\newblock Type theory in type theory using quotient inductive types.
+\newblock {\em ACM SIGPLAN Notices}, 51(1):18--29, 2016.
+
+\bibitem{awodey2004propositions}
+Steven Awodey and Andrej Bauer.
+\newblock Propositions as [types].
+\newblock {\em Journal of logic and computation}, 14(4):447--471, 2004.
+
+\bibitem{bezem2014model}
+Marc Bezem, Thierry Coquand, and Simon Huber.
+\newblock A model of type theory in cubical sets.
+\newblock In {\em 19th International conference on types for proofs and programs (TYPES 2013)}, pages 107--128. Schloss Dagstuhl--Leibniz-Zentrum f{\"u}r Informatik, 2014.
+
+\bibitem{cavallo2021higher}
+Evan Cavallo.
+\newblock {\em Higher Inductive Types and Internal Parametricity for Cubical Type Theory.}
+\newblock PhD thesis, Carnegie Mellon University, USA, 2021.
+
+\bibitem{cohen2016cubical}
+Cyril Cohen, Thierry Coquand, Simon Huber, and Anders M{\"o}rtberg.
+\newblock Cubical type theory: a constructive interpretation of the univalence axiom.
+\newblock {\em arXiv preprint arXiv:1611.02108}, 2016.
 
 \bibitem{grothstacks}
 Alexander Grothendieck.
@@ -20,14 +45,44 @@ Simon Huber.
 \newblock {\em A model of type theory in cubical sets}.
 \newblock PhD thesis, Chalmers University of Technology, 2015.
 
+\bibitem{lurie}
+Jacob Lurie.
+\newblock {\em Higher topos theory}.
+\newblock Princeton University Press, 2009.
+
 \bibitem{martin1975intuitionistic}
 Per Martin-L{\"o}f.
-\newblock An intuitionistic theory of types: Predicative part.
-\newblock In {\em Studies in Logic and the Foundations of Mathematics}, volume~80, pages 73--118. Elsevier, 1975.
+\newblock {\em An intuitionistic theory of types: Predicative part}, volume~80.
+\newblock Elsevier, 1975.
+
+\bibitem{martin1982constructive}
+Per Martin-L{\"o}f.
+\newblock Constructive mathematics and computer programming.
+\newblock In {\em Studies in Logic and the Foundations of Mathematics}, volume 104, pages 153--175. Elsevier, 1982.
 
 \bibitem{HoTT}
 The Univalent~Foundations Program.
 \newblock {\em Homotopy type theory: Univalent foundations of mathematics}.
 \newblock The Univalent Foundations Program, 2013.
+
+\bibitem{quillen2006homotopical}
+Daniel~G Quillen.
+\newblock {\em Homotopical algebra}.
+\newblock Springer, 2006.
+
+\bibitem{sojakova2015higher}
+Kristina Sojakova.
+\newblock Higher inductive types as homotopy-initial algebras.
+\newblock In {\em Proceedings of the 42Nd Annual ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages}, pages 31--42, 2015.
+
+\bibitem{tom2008algebraic}
+Tammo tom Dieck.
+\newblock {\em Algebraic topology}, volume~8.
+\newblock European Mathematical Society, 2008.
+
+\bibitem{voevodsky2014equivalence}
+Vladimir Voevodsky.
+\newblock The equivalence axiom and univalent models of type theory.(talk at cmu on february 4, 2010).
+\newblock {\em arXiv preprint arXiv:1402.5556}, 2014.
 
 \end{thebibliography}

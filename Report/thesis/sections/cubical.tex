@@ -40,7 +40,10 @@ u(0,0) \arrow[u, "u(x=0)"] \arrow[r, "u(y=0)"']  & u(1,0) \arrow[u, "u(x=1)"']
 
 Cubical sets form a presheaf category, i.e. $\cSet := [\square, \Set]$ with morphisms given by 
 natural transformations.
-
+\begin{example}
+  Let $A$ be a set. Then $X : \cube \to \Set$ with $X(\varnothing) = A$ and $X(I) = \varnothing$ if $I \neq \varnothing$
+  is called the discrete cubical set over $A$.
+\end{example}
 \begin{example}
   Let $R$ be a commutative ring. Then $R[\cdot]$ is a cubical set, with $R[I]$ being the polynomial ring over $I$,
   and for $f : I \to J$, $R[f](x) = f(x)$ where $0$ and $1$ in $\2$ are swapped for $0$ and $1$ from $R$. 
@@ -122,6 +125,8 @@ This condition for $X$, known as the \emph{Kan condition} is the analogous state
 Any presheaf category gives rise to a model of dependent type theory by intepreting each presheaf as a type.~\cite{hofmann97} 
 Hence, cubical sets form such a model with (dependent) products, (dependent) sums, inductive types and identity types.
 We refine this model by restricting to Kan Cubical Sets taken along with a specified `Kan Structure',
-which are the Kan filling operations $X \fillup$ and $X \filldown$. This is needed in order to justify the elimination rules for identity types.
-For a complete treatment, see Simon Huber's PhD Thesis for more details.~\cite{huberphd}
+which are the Kan filling operations $X \fillup$ and $X \filldown$. This is needed in order to justify the elimination rules for identity types.~\cite{bezem2014model}
+Consequently, we can prove functional extentionality, univalence, canonicity for HITs.
+For a complete, formal treatment, see Simon Huber's PhD Thesis for more details.~\cite{huberphd}
+
 
