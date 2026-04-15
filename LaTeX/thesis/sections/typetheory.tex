@@ -6,7 +6,7 @@ first-order logic, which is separately assumed beforehand. The logic's deductive
 inferences, while the \textit{axioms} define and describe sets and
 their semantics. This forms a basis to build mathematics, using sets to describe mathematical
 objects, while manipulating statements via first-order logic.
-MLTT conserves the dependence on axioms and constructs more machinery within the deductive system itself. The
+MLTT limits the dependence on axioms and constructs more machinery within the deductive system itself. The
 deductive system consists of the primitive notion of `types', the building blocks
 for mathematical objects as well as the logic, while specifying the rule that govern them. 
 
@@ -22,7 +22,7 @@ The language of MLTT is an extension of dependently-typed $\lambda$-calculus, wi
 $x_1, x_2, \ldots$, primitive constants $c, c', c'', \ldots$, and defined constants $f, f', f''$.
 The terms $t, t', t'', \ldots$ are given by the grammar 
 \begin{align*}
-  t \to x \mid \lambda x.t \mid t(t') \mid  c \mid f
+  t ::= x \mid \lambda x.t \mid t(t') \mid  c \mid f.
 \end{align*}
 
 Further, MLTT provides rules to form types from a preexisting context, and rules to manipulate defined or preexisting types 
@@ -42,10 +42,10 @@ with
   \item If $A : \U_i$, then $A : \U_{i+1}$ 
 \end{itemize}
 Any type in the theory is an instance of some universe in this chain. Each universe is also a type,
-and an instance of universes above it in this heirarchy. But unless necessary, we omit the index from
+and is an instance of universes above it in this heirarchy. Unless necessary, we shall often omit the index from
 the universe and write $A : \U$.
 
 \textit{\textbf{Remark.} This chain, while indexed by natural numbers, is not related to the Natural 
 Numbers that will be defined in the theory. The indices come the metatheory.
-We shall see the arithmetic object of Natural Numbers $(\N)$ is richer and needs more
+The arithmetic object of Natural Numbers $(\N)$ is richer and needs more
 information to be properly defined.}
