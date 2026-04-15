@@ -60,6 +60,11 @@ Simon Huber.
 \newblock Canonicity for cubical type theory: S. huber.
 \newblock {\em Journal of Automated Reasoning}, 63(2):173--210, 2019.
 
+\bibitem{kan1955abstract}
+Daniel~M Kan.
+\newblock Abstract homotopy.
+\newblock {\em Proceedings of the National Academy of Sciences}, 41(12):1092--1096, 1955.
+
 \bibitem{kapulkin2021simplicial}
 Krzysztof Kapulkin and Peter~LeFanu Lumsdaine.
 \newblock The simplicial model of univalent foundations (after voevodsky).
@@ -94,10 +99,5 @@ Daniel~G Quillen.
 Kristina Sojakova.
 \newblock Higher inductive types as homotopy-initial algebras.
 \newblock In {\em Proceedings of the 42Nd Annual ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages}, pages 31--42, 2015.
-
-\bibitem{voevodsky2014equivalence}
-Vladimir Voevodsky.
-\newblock The equivalence axiom and univalent models of type theory.(talk at cmu on february 4, 2010).
-\newblock {\em arXiv preprint arXiv:1402.5556}, 2014.
 
 \end{thebibliography}

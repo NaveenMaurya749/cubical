@@ -6,43 +6,43 @@ Database file #1: references.bib
 Warning--empty journal in howard1995formulae
 You've used 20 entries,
             2118 wiz_defined-function locations,
-            607 strings with 6661 characters,
-and the built_in function-call counts, 6047 in all, are:
-= -- 616
+            611 strings with 6607 characters,
+and the built_in function-call counts, 6156 in all, are:
+= -- 630
 > -- 207
 < -- 7
-+ -- 91
++ -- 90
 - -- 64
-* -- 351
-:= -- 998
+* -- 367
+:= -- 1010
 add.period$ -- 64
 call.type$ -- 20
 change.case$ -- 86
 chr.to.int$ -- 0
 cite$ -- 21
-duplicate$ -- 272
-empty$ -- 517
+duplicate$ -- 273
+empty$ -- 529
 format.name$ -- 64
-if$ -- 1294
+if$ -- 1318
 int.to.chr$ -- 0
 int.to.str$ -- 20
 missing$ -- 22
 newline$ -- 103
 num.names$ -- 40
-pop$ -- 111
+pop$ -- 109
 preamble$ -- 1
 purify$ -- 72
 quote$ -- 0
 skip$ -- 186
 stack$ -- 0
-substring$ -- 371
+substring$ -- 401
 swap$ -- 63
 text.length$ -- 7
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 72
 warning$ -- 1
-while$ -- 65
+while$ -- 67
 width$ -- 22
-write$ -- 219
+write$ -- 220
 (There was 1 warning)
