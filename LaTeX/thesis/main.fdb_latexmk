@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1776194597.0474 "main.aux" "main.bbl" "main" 1776194797.28489 0
+["bibtex main"] 1776221161.94468 "main.aux" "main.bbl" "main" 1776221162.48276 0
   "./references.bib" 1776190160.29442 6048 9164a7d1c1c75593b45fd8b0de7233f6 ""
   "/usr/share/texmf-dist/bibtex/bst/base/plain.bst" 1772820570 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1776194797.21582 4562 d73d7de539778efe3a7f3163d21e776a "pdflatex"
+  "main.aux" 1776221162.41159 4562 67285d1e841613d0291f985c26f727db "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1776194796.83631 "main.tex" "main.pdf" "main" 1776194797.28503 0
+["pdflatex"] 1776221161.96253 "main.tex" "main.pdf" "main" 1776221162.4831 0
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1772820570 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1772820570 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1772820570 1004 54797486969f23fa377b128694d548df ""
@@ -183,10 +183,10 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1775242566 325445 e037c2d0d08ad8cbac81cfa7969967b5 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1775242557 2328200 dba9daf3e757003d77f5473c67ebf8ad ""
   "figures/iisc.jpg" 1776181107.21081 960197 956a66cf6e6cdc3c8261a9e467e7497f ""
-  "main.aux" 1776194797.21582 4562 d73d7de539778efe3a7f3163d21e776a "pdflatex"
-  "main.bbl" 1776194597.05666 3904 abc7eb5b45d060ff15201bf21ee5fee7 "bibtex main"
-  "main.out" 1776194797.21759 3657 6c96ed615778d8cd4805d05e37d44f04 "pdflatex"
-  "main.tex" 1776194595.05864 2501 982cbbd7f7b754aff05b92035974ffc1 ""
+  "main.aux" 1776221162.41159 4562 67285d1e841613d0291f985c26f727db "pdflatex"
+  "main.bbl" 1776221161.95659 3904 abc7eb5b45d060ff15201bf21ee5fee7 "bibtex main"
+  "main.out" 1776221162.41284 3657 6c96ed615778d8cd4805d05e37d44f04 "pdflatex"
+  "main.tex" 1776221160.4098 2501 92ddce1b7296ad8fd6510a6f094570f2 ""
   "sections/HoTT.tex" 1776191194.61775 5645 46fb0b30f46c23f30f84605d3cc21d4c ""
   "sections/cubical.tex" 1776192683.67528 7750 ec19e0cb7e6bb5981551c7cc1cf54357 ""
   "sections/inductive.tex" 1776179827.96519 9975 8abb8286e79bcadf5f1d8542f4c363c7 ""
