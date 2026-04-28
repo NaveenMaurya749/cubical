@@ -12,6 +12,11 @@ cubical/                -- repository
 │ ├── Tactics.lean      -- Custom defined tactics such as `pathind`
 │ ├── chapter1.lean     -- Exercises from Chapter 1
 │ └── chapter2.lean     -- Exercises from Chapter 1
+├── LaTeX/              -- LaTeX source for thesis report and presentation
+│ ├── presentation/     -- LaTeX source for final presentation
+│ | └── main.pdf        -- Compiled pdf
+│ └── thesis/           -- LaTeX source for final report submission
+│ | └── main.pdf        -- Compiled pdf
 ├── Cubical.lean        -- imports all modules from Cubical/
 ├── HoTT.lean           -- imports all modules from HoTT/
 ├── Main.lean           -- root file to be built
