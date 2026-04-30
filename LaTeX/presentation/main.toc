@@ -1,0 +1,11 @@
+\beamer@sectionintoc {1}{Foudational Systems}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{What is a Foundational System?}{4}{0}{1}
+\beamer@sectionintoc {2}{Martin-L\"of Type Theory (MLTT)}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{A Description of MLTT}{7}{0}{2}
+\beamer@subsectionintoc {2}{2}{Inductive Types}{10}{0}{2}
+\beamer@subsectionintoc {2}{3}{Identity Types}{13}{0}{2}
+\beamer@sectionintoc {3}{Homotopy Type Theory}{15}{0}{3}
+\beamer@subsectionintoc {3}{1}{The Homotopy Interpretation}{17}{0}{3}
+\beamer@subsectionintoc {3}{2}{The Univalence Axiom}{20}{0}{3}
+\beamer@sectionintoc {4}{Limitations}{24}{0}{4}
+\beamer@subsectionintoc {4}{1}{Limitations of HoTT}{25}{0}{4}
