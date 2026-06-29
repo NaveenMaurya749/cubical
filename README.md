@@ -1,6 +1,8 @@
 # cubical
 
-Bachelor's Thesis Project repository on Cubical Homotopy Type Theory
+This is the repository for my Bachelor's Thesis at IISc during 2026 advised by Prof Siddhartha Gadgil, on the topic of investigating
+a variety of foundational systems called Type Theories, namely Martin-Löf Type Theory, Homotopy Type Theory and Cubical Type Theory.
+The report and slides for presentation were submitted by May 01, 2026.
 
 ## Contents so far
 
