@@ -33,3 +33,7 @@ cubical/                -- repository
 ├── Main.lean           -- root file to be built
 └── README.md           -- readme
 ```
+
+## Releases
+
+The releases consist of the final report and slides for presentation held on May 01, 2026.
